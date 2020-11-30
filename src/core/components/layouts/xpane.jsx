@@ -69,5 +69,3 @@ XPane.propTypes = {
   layoutSelectors: PropTypes.object.isRequired,
   layoutActions: PropTypes.object.isRequired
 }
-
-

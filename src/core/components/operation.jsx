@@ -30,7 +30,8 @@ export default class Operation extends PureComponent {
     oas3Selectors: PropTypes.object.isRequired,
     layoutActions: PropTypes.object.isRequired,
     layoutSelectors: PropTypes.object.isRequired,
-    fn: PropTypes.object.isRequired
+    fn: PropTypes.object.isRequired,
+    alwaysHide: PropTypes.bool.isRequired,
   }
 
   static defaultProps = {
@@ -38,7 +39,8 @@ export default class Operation extends PureComponent {
     response: null,
     request: null,
     specPath: List(),
-    summary: ""
+    summary: "",
+    alwaysHide: false,
   }
 
   render() {
@@ -58,7 +60,8 @@ export default class Operation extends PureComponent {
       authActions,
       authSelectors,
       oas3Actions,
-      oas3Selectors
+      oas3Selectors,
+      alwaysHide,
     } = this.props
     let operationProps = this.props.operation
 
@@ -113,9 +116,9 @@ export default class Operation extends PureComponent {
     let onChangeKey = [ path, method ] // Used to add values to _this_ operation ( indexed by path and method )
 
     return (
-        <div className={deprecated ? "opblock opblock-deprecated" : isShown ? `opblock opblock-${method} is-open` : `opblock opblock-${method}`} id={escapeDeepLinkPath(isShownKey.join("-"))} >
+      <div className={deprecated ? "opblock opblock-deprecated" : (isShown && !alwaysHide) ? `opblock opblock-${method} is-open` : `opblock opblock-${method}`} id={escapeDeepLinkPath(isShownKey.join("-"))} >
         <OperationSummary operationProps={operationProps} toggleShown={toggleShown} getComponent={getComponent} authActions={authActions} authSelectors={authSelectors} specPath={specPath} />
-          <Collapse isOpened={isShown}>
+        <Collapse isOpened={(isShown && !alwaysHide)}>
             <div className="opblock-body">
               { (operation && operation.size) || operation === null ? null :
                 <img height={"32px"} width={"32px"} src={require("core/../img/rolling-load.svg")} className="opblock-loading-animation" />

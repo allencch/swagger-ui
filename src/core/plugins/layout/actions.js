@@ -4,6 +4,7 @@ export const UPDATE_LAYOUT = "layout_update_layout"
 export const UPDATE_FILTER = "layout_update_filter"
 export const UPDATE_MODE = "layout_update_mode"
 export const SHOW = "layout_show"
+export const SELECT_OPERATION = "select_operation"
 
 // export const ONLY_SHOW = "layout_only_show"
 
@@ -35,5 +36,12 @@ export function changeMode(thing, mode="") {
   return {
     type: UPDATE_MODE,
     payload: {thing, mode}
+  }
+}
+
+export function selectOperation(operation) {
+  return {
+    type: SELECT_OPERATION,
+    payload: operation
   }
 }

@@ -19,6 +19,8 @@ export default class BaseLayout extends React.Component {
     let InfoContainer = getComponent("InfoContainer", true)
     let VersionPragmaFilter = getComponent("VersionPragmaFilter")
     let Operations = getComponent("operations", true)
+    const Tags = getComponent('Tags', true)
+    const OperationDetail = getComponent('OperationDetail', true)
     let Models = getComponent("Models", true)
     let Row = getComponent("Row")
     let Col = getComponent("Col")
@@ -36,7 +38,7 @@ export default class BaseLayout extends React.Component {
     const loadingStatus = specSelectors.loadingStatus()
 
     let loadingMessage = null
-  
+
     if(loadingStatus === "loading") {
       loadingMessage = <div className="info">
         <div className="loading-container">
@@ -85,41 +87,50 @@ export default class BaseLayout extends React.Component {
     const hasSecurityDefinitions = !!specSelectors.securityDefinitions()
 
     return (
-
       <div className='swagger-ui'>
-          <SvgAssets />
-          <VersionPragmaFilter isSwagger2={isSwagger2} isOAS3={isOAS3} alsoShow={<Errors/>}>
-            <Errors/>
-            <Row className="information-container">
-              <Col mobile={12}>
-                <InfoContainer/>
-              </Col>
-            </Row>
-
-            {hasServers || hasSchemes || hasSecurityDefinitions ? (
-              <div className="scheme-container">
-                <Col className="schemes wrapper" mobile={12}>
-                  {hasServers ? (<ServersContainer />) : null}
-                  {hasSchemes ? (<SchemesContainer />) : null}
-                  {hasSecurityDefinitions ? (<AuthorizeBtnContainer />) : null}
+        <Row className="swagger-ui-main-row">
+          <Col mobile={12} desktop={3} className="swagger-ui-sidebar">
+            <Tags />
+          </Col>
+          <Col mobile={12} desktop={5} className="swagger-ui-content">
+            <SvgAssets />
+            <VersionPragmaFilter isSwagger2={isSwagger2} isOAS3={isOAS3} alsoShow={<Errors/>}>
+              <Errors/>
+              <Row className="information-container">
+                <Col mobile={12}>
+                  <InfoContainer/>
                 </Col>
-              </div>
-            ) : null}
+              </Row>
 
-            <FilterContainer/>
+              {hasServers || hasSchemes || hasSecurityDefinitions ? (
+                <div className="scheme-container">
+                  <Col className="schemes wrapper" mobile={12}>
+                    {hasServers ? (<ServersContainer />) : null}
+                    {hasSchemes ? (<SchemesContainer />) : null}
+                    {hasSecurityDefinitions ? (<AuthorizeBtnContainer />) : null}
+                  </Col>
+                </div>
+              ) : null}
 
-            <Row>
-              <Col mobile={12} desktop={12} >
-                <Operations/>
-              </Col>
-            </Row>
-            <Row>
-              <Col mobile={12} desktop={12} >
-                <Models/>
-              </Col>
-            </Row>
-          </VersionPragmaFilter>
-        </div>
-      )
+              <FilterContainer/>
+
+              <Row>
+                <Col mobile={12} desktop={12} >
+                  <Operations/>
+                </Col>
+              </Row>
+              <Row>
+                <Col mobile={12} desktop={12} >
+                  <Models/>
+                </Col>
+              </Row>
+            </VersionPragmaFilter>
+          </Col>
+          <Col mobile={12} desktop={4} className="swagger-ui-api-console">
+            <OperationDetail />
+          </Col>
+        </Row>
+      </div>
+    )
   }
 }

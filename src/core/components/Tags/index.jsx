@@ -1,6 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import Im from "immutable"
+import Tag from './Tag';
 
 const SWAGGER2_OPERATION_METHODS = [
   "get", "put", "post", "delete", "options", "head", "patch"
@@ -9,7 +10,8 @@ const SWAGGER2_OPERATION_METHODS = [
 const OAS3_OPERATION_METHODS = SWAGGER2_OPERATION_METHODS.concat(["trace"])
 
 
-export default class Operations extends React.Component {
+export default class Tags extends React.Component {
+
   static propTypes = {
     specSelectors: PropTypes.object.isRequired,
     specActions: PropTypes.object.isRequired,
@@ -25,12 +27,12 @@ export default class Operations extends React.Component {
   };
 
   constructor(props) {
-    super(props)
-    this.onClickOperation = this.onClickOperation.bind(this)
+    super(props);
+    this.onClickTop = this.onClickTop.bind(this);
   }
 
-  onClickOperation(payload) {
-    this.props.layoutActions.selectOperation(payload)
+  onClickTop() {
+    window.scrollTo(0, 0);
   }
 
   render() {
@@ -66,12 +68,12 @@ export default class Operations extends React.Component {
     }
 
     return (
-        <div>
+        <div className="sidebar-tags">
           {
             taggedOps.map( (tagObj, tag) => {
               const operations = tagObj.get("operations")
               return (
-                <OperationTag
+                <Tag
                   key={"operation-" + tag}
                   tagObj={tagObj}
                   tag={tag}
@@ -80,58 +82,24 @@ export default class Operations extends React.Component {
                   layoutActions={layoutActions}
                   getConfigs={getConfigs}
                   getComponent={getComponent}
-                  specUrl={specSelectors.url()}>
-                  {
-                    operations.map( op => {
-                      const path = op.get("path")
-                      const method = op.get("method")
-                      const specPath = Im.List(["paths", path, method])
-
-
-                      // FIXME: (someday) this logic should probably be in a selector,
-                      // but doing so would require further opening up
-                      // selectors to the plugin system, to allow for dynamic
-                      // overriding of low-level selectors that other selectors
-                      // rely on. --KS, 12/17
-                      const validMethods = specSelectors.isOAS3() ?
-                            OAS3_OPERATION_METHODS : SWAGGER2_OPERATION_METHODS
-
-                      if(validMethods.indexOf(method) === -1) {
-                        return null
-                      }
-
-                      return (
-                        <div
-                          key={`${path}-${method}`}
-                          onClick={() => this.onClickOperation({ op, tag })}
-                        >
-                          <OperationContainer
-                            specPath={specPath}
-                            op={op}
-                            path={path}
-                            method={method}
-                            tag={tag}
-                            alwaysHide
-                          />
-                        </div>
-                      )
-                    }).toArray()
-                  }
-
-
-                </OperationTag>
+                  specUrl={specSelectors.url()}
+                />
               )
             }).toArray()
           }
 
           { taggedOps.size < 1 ? <h3> No operations defined in spec! </h3> : null }
+
+          <div className="sidebar-tags-top" onClick={this.onClickTop}>
+            TOP
+          </div>
         </div>
     )
   }
 
 }
 
-Operations.propTypes = {
+Tags.propTypes = {
   layoutActions: PropTypes.object.isRequired,
   specSelectors: PropTypes.object.isRequired,
   specActions: PropTypes.object.isRequired,
