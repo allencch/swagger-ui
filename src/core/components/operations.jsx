@@ -111,7 +111,6 @@ export default class Operations extends React.Component {
                             path={path}
                             method={method}
                             tag={tag}
-                            alwaysHide
                           />
                         </div>
                       )

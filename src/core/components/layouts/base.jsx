@@ -89,10 +89,10 @@ export default class BaseLayout extends React.Component {
     return (
       <div className='swagger-ui'>
         <Row className="swagger-ui-main-row">
-          <Col mobile={12} desktop={3} className="swagger-ui-sidebar">
+          <Col mobile={12} desktop={2} className="swagger-ui-sidebar">
             <Tags />
           </Col>
-          <Col mobile={12} desktop={5} className="swagger-ui-content">
+          <Col mobile={12} desktop={10} className="swagger-ui-content">
             <SvgAssets />
             <VersionPragmaFilter isSwagger2={isSwagger2} isOAS3={isOAS3} alsoShow={<Errors/>}>
               <Errors/>
@@ -125,9 +125,6 @@ export default class BaseLayout extends React.Component {
                 </Col>
               </Row>
             </VersionPragmaFilter>
-          </Col>
-          <Col mobile={12} desktop={4} className="swagger-ui-api-console">
-            <OperationDetail />
           </Col>
         </Row>
       </div>
