@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import Im from "immutable"
-import Tag from './Tag';
+import Tag from "./Tag"
 
 const SWAGGER2_OPERATION_METHODS = [
   "get", "put", "post", "delete", "options", "head", "patch"
@@ -27,12 +27,12 @@ export default class Tags extends React.Component {
   };
 
   constructor(props) {
-    super(props);
-    this.onClickTop = this.onClickTop.bind(this);
+    super(props)
+    this.onClickTop = this.onClickTop.bind(this)
   }
 
   onClickTop() {
-    window.scrollTo(0, 0);
+    window.scrollTo(0, 0)
   }
 
   render() {
@@ -70,22 +70,25 @@ export default class Tags extends React.Component {
     return (
         <div className="sidebar-tags">
           {
-            taggedOps.map( (tagObj, tag) => {
-              const operations = tagObj.get("operations")
-              return (
-                <Tag
-                  key={"operation-" + tag}
-                  tagObj={tagObj}
-                  tag={tag}
-                  oas3Selectors={oas3Selectors}
-                  layoutSelectors={layoutSelectors}
-                  layoutActions={layoutActions}
-                  getConfigs={getConfigs}
-                  getComponent={getComponent}
-                  specUrl={specSelectors.url()}
-                />
-              )
-            }).toArray()
+            taggedOps
+              .sortBy(
+                (value, key) => key,
+                (a, b) => a.localeCompare(b)
+              ).map( (tagObj, tag) => {
+                return (
+                  <Tag
+                    key={"operation-" + tag}
+                    tagObj={tagObj}
+                    tag={tag}
+                    oas3Selectors={oas3Selectors}
+                    layoutSelectors={layoutSelectors}
+                    layoutActions={layoutActions}
+                    getConfigs={getConfigs}
+                    getComponent={getComponent}
+                    specUrl={specSelectors.url()}
+                  />
+                )
+              }).toArray()
           }
 
           { taggedOps.size < 1 ? <h3> No operations defined in spec! </h3> : null }
