@@ -22,3 +22,5 @@ export const showSummary = createSelector(
   state,
   state => !isShown(state, "editor")
 )
+
+export const currentOperation = state => state.get("operation")

@@ -1,7 +1,7 @@
 .wrapper
 {
     width: 100%;
-    max-width: 1460px;
+    // max-width: 1460px;
     margin: 0 auto;
     padding: 0 20px;
     box-sizing: border-box;
@@ -938,4 +938,74 @@ span
         color: #555;
         font-weight: bold;
     }
+}
+
+.swagger-ui-main-row {
+  display: flex;
+  .col-1-desktop {
+    width: 8.333333%;
+  }
+  .col-2-desktop {
+    width: 16.666667%;
+  }
+  .col-3-desktop {
+    width: 25%;
+  }
+  .col-4-desktop {
+    width: 33.333333%;
+  }
+  .col-5-desktop {
+    width: 41.666667%;
+  }
+  .col-6-desktop {
+    width: 50%;
+  }
+  .col-7-desktop {
+    width: 58.333333%;
+  }
+  .col-8-desktop {
+    width: 66.666667%;
+  }
+  .col-9-desktop {
+    width: 75%;
+  }
+  .col-10-desktop {
+    width: 83.333333%;
+  }
+  .col-11-desktop {
+    width: 91.666667%;
+  }
+  .col-12-desktop {
+    width: 100%;
+  }
+}
+
+.swagger-ui-sidebar {
+  min-width: 300px;
+}
+
+.sidebar-tags-top {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  font-size: 1.5em;
+  font-weight: bold;
+  background-color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  margin: 4px;
+}
+
+.swagger-ui-api-console {
+  margin-top: 20px;
+  margin-left: 15px;
+
+  a.nostyle {
+    word-break: normal;
+  }
+}
+
+.operation-detail {
+  position: fixed;
+  overflow: auto;
+  max-height: 100vh;
 }

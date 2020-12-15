@@ -9,8 +9,12 @@ export default class OperationContainer extends PureComponent {
     super(props, context)
     this.state = {
       tryItOutEnabled: false,
-      executeInProgress: false
+      executeInProgress: false,
     }
+  }
+
+  static defaultProps = {
+    alwaysHide: false
   }
 
   static propTypes = {
@@ -41,7 +45,8 @@ export default class OperationContainer extends PureComponent {
     layoutActions: PropTypes.object.isRequired,
     layoutSelectors: PropTypes.object.isRequired,
     fn: PropTypes.object.isRequired,
-    getConfigs: PropTypes.func.isRequired
+    getConfigs: PropTypes.func.isRequired,
+    alwaysHide: PropTypes.bool.isRequired,
   }
 
   static defaultProps = {
@@ -102,8 +107,17 @@ export default class OperationContainer extends PureComponent {
   }
 
   toggleShown =() => {
-    let { layoutActions, tag, operationId, isShown } = this.props
+    let { layoutActions, tag, operationId, isShown, alwaysHide } = this.props
     const resolvedSubtree = this.getResolvedSubtree()
+
+    if (alwaysHide) { // Then it should always show the right hand detail
+      if (resolvedSubtree === undefined) {
+        this.requestResolvedSubtree()
+      }
+      layoutActions.show(["operations", tag, operationId], true)
+      return
+    }
+
     if(!isShown && resolvedSubtree === undefined) {
       // transitioning from collapsed to expanded
       this.requestResolvedSubtree()
@@ -183,7 +197,8 @@ export default class OperationContainer extends PureComponent {
       authSelectors,
       oas3Actions,
       oas3Selectors,
-      fn
+      fn,
+      alwaysHide
     } = this.props
 
     const Operation = getComponent( "operation" )
@@ -221,9 +236,9 @@ export default class OperationContainer extends PureComponent {
         isShown={isShown}
 
         toggleShown={this.toggleShown}
-        onTryoutClick={this.onTryoutClick}
-        onCancelClick={this.onCancelClick}
-        onExecute={this.onExecute}
+        onTryoutClick={alwaysHide ? () => {} : this.onTryoutClick}
+        onCancelClick={alwaysHide ? () => {} :this.onCancelClick}
+        onExecute={alwaysHide ? () => {} : this.onExecute}
         specPath={specPath}
 
         specActions={ specActions }
@@ -237,6 +252,8 @@ export default class OperationContainer extends PureComponent {
         getComponent={ getComponent }
         getConfigs={ getConfigs }
         fn={fn}
+
+        alwaysHide={alwaysHide}
       />
     )
   }

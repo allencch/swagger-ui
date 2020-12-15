@@ -30,8 +30,7 @@ export default class StandaloneLayout extends React.Component {
     return (
 
       <Container className='swagger-ui'>
-        {Topbar ? <Topbar /> : null}
-        <BaseLayout /> 
+        <BaseLayout />
         <Row>
           <Col>
             <OnlineValidatorBadge />

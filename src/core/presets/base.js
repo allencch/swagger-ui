@@ -82,10 +82,10 @@ import VersionPragmaFilter from "core/components/version-pragma-filter"
 import VersionStamp from "core/components/version-stamp"
 import DeepLink from "core/components/deep-link"
 import SvgAssets from "core/components/svg-assets"
-
 import Markdown from "core/components/providers/markdown"
-
 import BaseLayout from "core/components/layouts/base"
+import Tags from "core/components/Tags"
+import OperationDetail from "core/components/OperationDetail"
 
 import * as LayoutUtils from "core/components/layout-utils"
 import * as JsonSchemaComponents from "core/json-schema-components"
@@ -163,6 +163,8 @@ export default function() {
       Example,
       ExamplesSelect,
       ExamplesSelectValueRetainer,
+      Tags,
+      OperationDetail,
     }
   }
 

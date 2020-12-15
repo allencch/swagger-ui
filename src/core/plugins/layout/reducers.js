@@ -3,7 +3,8 @@ import {
   UPDATE_LAYOUT,
   UPDATE_FILTER,
   UPDATE_MODE,
-  SHOW
+  SHOW,
+  SELECT_OPERATION
 } from "./actions"
 
 export default {
@@ -27,6 +28,7 @@ export default {
     let thing = action.payload.thing
     let mode = action.payload.mode
     return state.setIn(["modes"].concat(thing), (mode || "") + "")
-  }
+  },
 
+  [SELECT_OPERATION]: (state, action) => state.set("operation", action.payload),
 }
